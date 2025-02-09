@@ -25,6 +25,9 @@
     </li>
     <li><a href="#third-party-libraries-used-except-for-react-and-rtk">Third Party libraries used except for React and RTK</a></li>
     <li>
+      <a href="#deployment">Deployment</a>
+    </li>
+    <li>
       <a href="#contact">Contact</a>
     </li>
   </ol>
@@ -33,16 +36,16 @@
 <br />
 
 <div align="center">
-  <img src="./public/assets/home-page.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/home-page.png" alt="Home Page" width="100%" height="100%">
   <p align="center">Home Page</p>
-  <img src="./public/assets/mini-portal.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/mini-portal.png" alt="Mini Portal" width="100%" height="100%">
   <p align="center">Mini Portal</p>
-  <img src="./public/assets/detail-modal.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/detail-modal.png" alt="Detail Modal" width="100%" height="100%">
   <p align="center">Detail Modal</p>
-  <img src="./public/assets/grid-genre.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/grid-genre.png" alt="Grid Genre Page" width="100%" height="100%">
   <p align="center">Grid Genre Page</p>
-  <img src="./public/assets/watch.png" alt="Logo" width="100%" height="100%">
-  <p align="center">Watch Page with customer contol bar</p>
+  <img src="./public/assets/watch.png" alt="Watch Page" width="100%" height="100%">
+  <p align="center">Watch Page with customer control bar</p>
 </div>
 
 ## Prerequests
@@ -86,10 +89,86 @@ docker build --build-arg TMDB_V3_API_KEY=your_api_key_here -t netflix-clone .
 docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 ```
 
-## Todo
+## Deployment
 
-- Make the animation of video card portal more similar to Netflix.
-- Improve performance. I am using `context` and `provider` but all components subscribed to the context's value are re-rendered. These re-renders happen even if the part of the value is not used in render of the component. there are [several ways](https://blog.axlight.com/posts/4-options-to-prevent-extra-rerenders-with-react-context/) to prevent the re-renders from these behaviours. In addition to them, there may be several performance issues.
-- Replace bundler([Vite](https://vitejs.dev/guide)) with [Turbopack](https://turbo.build/pack/docs/why-turbopack). Turbopack is introduced in Next.js conf recently. It's very fast but it's nor ready to use right now. it just support Next.js, and they plan to support all others as soon as possible. so if it's ready to use, replace [Vite](https://vitejs.dev/guide) with [Turbopack](https://turbo.build/pack/docs/why-turbopack).
-- Add accessibilities for better UX.
-- Add Tests.
+### Jenkins Deployment Screenshot:
+
+![Jenkins Deployment](./deployment-ss/jenkins1.png)
+![Jenkins Deployment](./deployment-ss/jenkins2.png)
+
+### Prometheus Deployment Screenshot:
+
+![Prometheus Deployment](./deployment-ss/prometheus.png)
+
+### Grafana Deployment Screenshot:
+
+Jenkins:-
+![Grafana Deployment](./deployment-ss/grafana-jenkins.png)
+Node Exporter:-
+![Grafana Deployment](./deployment-ss/grafana-node-exporter.png)
+
+### SonarQube Deployment Screenshot:
+
+![SonarQube Deployment](./deployment-ss/sonarqube.png)
+
+### Step 1 — Launch an Ubuntu(22.04) T2 Large Instance
+
+- Launch an EC2 instance (Ubuntu 22.04) with the T2 Large configuration.
+
+### Step 2 — Install Jenkins, Docker, and Trivy
+
+- Install **Jenkins** to automate the deployment.
+- Install **Docker** to containerize applications.
+- Install **Trivy** for vulnerability scanning in Docker images.
+
+### Step 3 — Create a TMDB API Key
+
+- Go to [TMDB](https://www.themoviedb.org/) and create an account.
+- Follow the [documentation](https://developers.themoviedb.org/3/getting-started/introduction) to generate an API key.
+- Use this key for fetching movie data in the project.
+
+### Step 4 — Install Prometheus and Grafana On a New Server
+
+- Install **Prometheus** and **Grafana** on a new EC2 instance to monitor the performance of the application.
+- Configure Prometheus to gather metrics and use Grafana to visualize them.
+
+### Step 5 — Install the Prometheus Plugin and Integrate It with Jenkins
+
+- Install the **Prometheus** plugin in Jenkins.
+- Integrate it with the Prometheus server for monitoring Jenkins builds.
+
+### Step 6 — Email Integration with Jenkins and Plugin Setup
+
+- Set up email notifications in Jenkins using the **Email Extension Plugin** for build status updates.
+
+### Step 7 — Install Plugins Like JDK, SonarQube Scanner, NodeJS, and OWASP Dependency Check
+
+- Install plugins for **JDK**, **SonarQube Scanner**, **NodeJS**, and **OWASP Dependency Check** for security scanning.
+
+### Step 8 — Create a Pipeline Project in Jenkins Using a Declarative Pipeline
+
+- Create a Jenkins pipeline using the **Declarative Pipeline** format to automate the building, testing, and deployment of the application.
+
+### Step 9 — Install OWASP Dependency Check Plugins
+
+- Install the **OWASP Dependency Check** plugin to check for vulnerabilities in third-party dependencies.
+
+### Step 10 — Docker Image Build and Push
+
+- Use Jenkins to build the Docker image and push it to Docker Hub or another registry.
+
+### Step 11 — Deploy the Image Using Docker
+
+- Deploy the built Docker image on the target machine using **Docker**.
+
+### Step 12 — Access the Netflix App on the Browser
+
+- Once deployed, access the Netflix clone on the browser using the public IP of the EC2 instance.
+
+### Step 13 — Terminate the AWS EC2 Instances
+
+- After completing the deployment and testing, terminate the EC2 instances to avoid unnecessary charges.
+
+## Contact
+
+For any questions or issues, feel free to reach out to the [repository's issue tracker](https://github.com/crazy-man22/netflix-clone-react-typescript/issues).
